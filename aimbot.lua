@@ -64,6 +64,14 @@ game:GetService'RunService'.Heartbeat:Connect(function()
 
 		local LookVectorGunPoint = GunPoint.WorldCFrame.lookVector * 500
 
+		local NearestPlayer = FindPlayerOnRay()
+
+		if NearestPlayer then
+			GunPoint.WorldCFrame = CFrame.lookAt(GunPoint.WorldCFrame.Position, NearestPlayer.Character.Head.Position)
+		else
+			GunPoint.WorldCFrame = CFrame.lookAt(GunPoint.WorldCFrame.Position, game.Players.LocalPlayer:GetMouse().Hit.Position)
+		end
+
 		local RayNew = workspace:Raycast(GunPoint.WorldCFrame.Position, LookVectorGunPoint)
 
 		if RayNew then
@@ -73,13 +81,6 @@ game:GetService'RunService'.Heartbeat:Connect(function()
 				DebugPart( RayNew.Position + Vector3.new(0, (Char.HumanoidRootPart.Position - RayNew.Position ).magnitude / 30 ,0) )
 			end
 
-			local NearestPlayer = FindPlayerOnRay()
-
-			if NearestPlayer then
-				GunPoint.WorldCFrame = CFrame.lookAt(GunPoint.WorldCFrame.Position, NearestPlayer.Character.Head.Position)
-			else
-				GunPoint.WorldCFrame = CFrame.lookAt(GunPoint.WorldCFrame.Position, game.Players.LocalPlayer:GetMouse().Hit.Position)
-			end
 		end
 
 	end
