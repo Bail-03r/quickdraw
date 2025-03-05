@@ -5,7 +5,7 @@ local Players = game:GetService("Players")
 
 whitelist = {5163870455,3133503266,4310880766}
 
-local debug = false
+local debug = true
 
 local function DebugPart(Position): Part?
 	task.spawn(function()
@@ -45,11 +45,20 @@ local function FindPlayerOnRay(): Player?
 	return nil
 end
 
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-	task.wait(1)
+game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
 
-	game.Players.LocalPlayer.Character.Acceleration:Destroy()
+    char.ChildAdded:Connect(function(part)
+        if part.Name == 'Revolver_Backpack' or part.Name == 'Winchester_Backpack' or part.Name == 'Acceleration' then
+        part:Destroy()
+        elseif part.Name == 'Revolver' then
+            part.ToolModel.Model:FindFirstChild('Drum'):Destroy()
+            part.ToolModel.Model:FindFirstChild('Hammer'):Destroy()
+        end
+    end)
+
 end)
+
+
 
 --game.Players.LocalPlayer.Character.Acceleration:Destroy()
 
